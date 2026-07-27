@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Holiday Drift</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Staatliches&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red: #d61f1f;
+      --red-deep: #9b0f0f;
+      --black: #111111;
+      --ink: #1a1a1a;
+      --paper: #eceae4;
+      --paper-bright: #f7f5ef;
+      --steel: #2f343a;
+      --yellow: #efc400;
+      --line: #111111;
+      --max: 72rem;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(214, 31, 31, 0.08) 0 18%, transparent 18% 100%),
+        linear-gradient(0deg, transparent 0 92%, rgba(17, 17, 17, 0.06) 92% 100%),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 47px,
+          rgba(17, 17, 17, 0.035) 47px,
+          rgba(17, 17, 17, 0.035) 48px
+        ),
+        linear-gradient(160deg, var(--paper-bright), var(--paper) 55%, #e2dfd6);
+      font-family: "Space Grotesk", sans-serif;
+      line-height: 1.55;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: var(--red);
+    }
+
+    .frame {
+      position: relative;
+      width: min(100% - 2rem, var(--max));
+      margin: 0 auto;
+      padding: 1.5rem 0 4rem;
+    }
+
+    .signal-bar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: 0.7rem;
+      background: var(--red);
+      z-index: 20;
+      transform: scaleY(0);
+      transform-origin: top;
+      animation: barDrop 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    }
+
+    .top-rail {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: riseIn 0.7s ease 0.2s forwards;
+    }
+
+    .mark {
+      width: 3.2rem;
+      height: 3.2rem;
+      display: grid;
+      place-items: center;
+      background: var(--black);
+      color: var(--yellow);
+    }
+
+    .mark svg {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+
+    .top-rail p {
+      margin: 0;
+      font-family: "Staatliches", sans-serif;
+      letter-spacing: 0.14em;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+    }
+
+    .hours {
+      display: flex;
+      gap: 0.35rem;
+      align-items: center;
+      font-family: "Staatliches", sans-serif;
+      letter-spacing: 0.08em;
+      color: var(--steel);
+    }
+
+    .hours span {
+      display: inline-grid;
+      place-items: center;
+      min-width: 2.1rem;
+      height: 2.1rem;
+      border: 2px solid var(--black);
+      background: var(--paper-bright);
+      font-size: 0.85rem;
+    }
+
+    .hours span.now {
+      background: var(--red);
+      color: white;
+      border-color: var(--red);
+    }
+
+    .hero {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 1.25rem;
+      min-height: min(78vh, 40rem);
+      margin-bottom: 2.5rem;
+      isolation: isolate;
+    }
+
+    .hero-panel {
+      position: relative;
+      background: var(--black);
+      color: white;
+      padding: 2rem 1.75rem 2.25rem;
+      overflow: hidden;
+      clip-path: polygon(0 0, 100% 0, 100% 88%, 92% 100%, 0 100%);
+      opacity: 0;
+      animation: riseIn 0.8s ease 0.35s forwards;
+    }
+
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      inset: auto -10% -20% auto;
+      width: 55%;
+      height: 70%;
+      background: var(--red);
+      transform: rotate(-18deg);
+      z-index: 0;
+    }
+
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      left: 1.5rem;
+      bottom: 1.5rem;
+      width: 4.5rem;
+      height: 0.55rem;
+      background: var(--yellow);
+      z-index: 1;
+    }
+
+    .hero-kicker {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 1rem;
+      font-family: "Staatliches", sans-serif;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      font-size: 0.95rem;
+    }
+
+    .hero h1 {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-family: "Archivo Black", sans-serif;
+      font-size: clamp(3rem, 9vw, 6.4rem);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      max-width: 9ch;
+    }
+
+    .hero-lead {
+      position: relative;
+      z-index: 1;
+      margin: 1.4rem 0 0;
+      max-width: 34ch;
+      font-size: 1.05rem;
+      color: #f2f2f2;
+    }
+
+    .hero-side {
+      position: relative;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: 1rem;
+      opacity: 0;
+      animation: riseIn 0.8s ease 0.5s forwards;
+    }
+
+    .diagram {
+      position: relative;
+      background:
+        linear-gradient(45deg, transparent 49%, var(--black) 49% 51%, transparent 51%),
+        linear-gradient(-45deg, transparent 49%, rgba(214, 31, 31, 0.5) 49% 51%, transparent 51%),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 18px,
+          rgba(17, 17, 17, 0.08) 18px,
+          rgba(17, 17, 17, 0.08) 19px
+        ),
+        var(--paper-bright);
+      border: 3px solid var(--black);
+      min-height: 16rem;
+      overflow: hidden;
+    }
+
+    .diagram svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .meta-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+    }
+
+    .meta-item {
+      border: 2px solid var(--black);
+      background: white;
+      padding: 0.7rem 0.75rem;
+      min-height: 5.2rem;
+    }
+
+    .meta-item strong {
+      display: block;
+      font-family: "Staatliches", sans-serif;
+      letter-spacing: 0.12em;
+      font-size: 0.85rem;
+      margin-bottom: 0.35rem;
+      color: var(--red);
+    }
+
+    .meta-item span {
+      font-size: 0.88rem;
+      line-height: 1.3;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 4.5rem 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    .icon-rail {
+      position: sticky;
+      top: 1.25rem;
+      display: grid;
+      gap: 0.65rem;
+      justify-items: center;
+      opacity: 0;
+      animation: riseIn 0.7s ease 0.65s forwards;
+    }
+
+    .icon-rail .glyph {
+      width: 2.6rem;
+      height: 2.6rem;
+      display: grid;
+      place-items: center;
+      border: 2px solid var(--black);
+      background: white;
+    }
+
+    .icon-rail .glyph:nth-child(odd) {
+      background: var(--red);
+      border-color: var(--red);
+      color: white;
+    }
+
+    .icon-rail .glyph:nth-child(3n) {
+      background: var(--black);
+      border-color: var(--black);
+      color: var(--yellow);
+    }
+
+    .icon-rail svg {
+      width: 1.35rem;
+      height: 1.35rem;
+    }
+
+    .article {
+      position: relative;
+      background: rgba(255, 255, 255, 0.72);
+      border: 3px solid var(--black);
+      padding: clamp(1.25rem, 3vw, 2.25rem);
+      box-shadow: 10px 10px 0 rgba(214, 31, 31, 0.85);
+      opacity: 0;
+      animation: riseIn 0.8s ease 0.7s forwards;
+    }
+
+    .article::before {
+      content: "";
+      position: absolute;
+      top: -0.75rem;
+      right: 1.5rem;
+      width: 2.4rem;
+      height: 2.4rem;
+      background: var(--yellow);
+      border: 2px solid var(--black);
+      transform: rotate(12deg);
+    }
+
+    .standfirst {
+      margin: 0 0 1.5rem;
+      font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+      max-width: 62ch;
+      font-weight: 500;
+    }
+
+    blockquote {
+      margin: 0 0 1.75rem;
+      padding: 1rem 1rem 1rem 1.2rem;
+      border-left: 0.7rem solid var(--red);
+      background:
+        linear-gradient(90deg, rgba(214, 31, 31, 0.08), transparent 65%),
+        #fff;
+      font-size: 1.02rem;
+    }
+
+    blockquote cite {
+      display: block;
+      margin-top: 0.85rem;
+      font-style: normal;
+      font-family: "Staatliches", sans-serif;
+      letter-spacing: 0.08em;
+      color: var(--steel);
+      font-size: 0.95rem;
+    }
+
+    .drift {
+      margin: 0;
+      font-size: clamp(1.02rem, 1.7vw, 1.14rem);
+      line-height: 1.72;
+      max-width: 68ch;
+      text-wrap: pretty;
+    }
+
+    .drift em {
+      font-style: italic;
+      color: var(--red-deep);
+      font-weight: 500;
+    }
+
+    .sources {
+      margin: 2rem 0 0;
+      padding-top: 1.2rem;
+      border-top: 3px solid var(--black);
+      font-size: 0.92rem;
+      color: var(--steel);
+      max-width: 68ch;
+    }
+
+    .footer {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      font-family: "Staatliches", sans-serif;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: riseIn 0.7s ease 0.9s forwards;
+    }
+
+    .footer .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--black);
+      color: white;
+      padding: 0.55rem 0.8rem;
+    }
+
+    .footer .tag i {
+      width: 0.7rem;
+      height: 0.7rem;
+      background: var(--red);
+      display: inline-block;
+    }
+
+    .diag-spin {
+      transform-origin: 160px 160px;
+      animation: spinSlow 28s linear infinite;
+    }
+
+    .diag-pulse {
+      animation: pulseBar 3.2s ease-in-out infinite;
+    }
+
+    @keyframes barDrop {
+      to { transform: scaleY(1); }
+    }
+
+    @keyframes riseIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes spinSlow {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulseBar {
+      0%, 100% { transform: translateX(0); opacity: 1; }
+      50% { transform: translateX(8px); opacity: 0.7; }
+    }
+
+    @media (max-width: 860px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .icon-rail {
+        position: static;
+        grid-auto-flow: column;
+        justify-content: start;
+        overflow-x: auto;
+        padding-bottom: 0.2rem;
+      }
+
+      .meta-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .hours span:nth-child(n + 5) {
+        display: none;
+      }
+
+      .article {
+        box-shadow: 6px 6px 0 rgba(214, 31, 31, 0.85);
+      }
+
+      .footer {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="signal-bar" aria-hidden="true"></div>
+
+  <main class="frame">
+    <header class="top-rail">
+      <div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="4"/>
+          <path d="M24 6V42M6 24H42" stroke="currentColor" stroke-width="4"/>
+          <path d="M12 12L36 36" stroke="#d61f1f" stroke-width="4"/>
+        </svg>
+      </div>
+      <p>Psychogeographic construct · Angoulême microclimate</p>
+      <div class="hours" aria-label="Twenty-four hour cycle">
+        <span>00</span><span>06</span><span class="now">12</span><span>18</span><span>24</span>
+      </div>
+    </header>
+
+    <section class="hero" aria-label="Holiday Drift">
+      <div class="hero-panel">
+        <p class="hero-kicker">Unitary dérive / 24h</p>
+        <h1>Holiday Drift</h1>
+        <p class="hero-lead">A continuous map of atmospheres through one rented house, one pool, and one day that refuses the itinerary.</p>
+      </div>
+
+      <aside class="hero-side" aria-hidden="true">
+        <div class="diagram">
+          <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+            <rect x="18" y="18" width="284" height="284" fill="none" stroke="#111" stroke-width="4"/>
+            <g class="diag-spin">
+              <circle cx="160" cy="160" r="78" fill="none" stroke="#d61f1f" stroke-width="8"/>
+              <circle cx="160" cy="160" r="34" fill="#111"/>
+              <path d="M160 48L176 120L160 104L144 120Z" fill="#efc400"/>
+            </g>
+            <rect class="diag-pulse" x="34" y="248" width="120" height="18" fill="#d61f1f"/>
+            <polygon points="230,54 286,54 286,110" fill="#111"/>
+            <line x1="40" y1="60" x2="150" y2="210" stroke="#111" stroke-width="6"/>
+            <line x1="60" y1="50" x2="170" y2="200" stroke="#d61f1f" stroke-width="3"/>
+            <text x="214" y="250" font-family="Staatliches, sans-serif" font-size="28" fill="#111">DRIFT</text>
+            <text x="214" y="276" font-family="Staatliches, sans-serif" font-size="18" fill="#d61f1f">00–24</text>
+          </svg>
+        </div>
+        <div class="meta-strip">
+          <div class="meta-item">
+            <strong>Method</strong>
+            <span>Situationist dérive</span>
+          </div>
+          <div class="meta-item">
+            <strong>Field</strong>
+            <span>House · pool · street</span>
+          </div>
+          <div class="meta-item">
+            <strong>Form</strong>
+            <span>Single continuous sentence</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <div class="content">
+      <nav class="icon-rail" aria-label="Constructivist markers">
+        <div class="glyph" title="Circle / cycle">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2.5"/><path d="M12 4v8l5 3" stroke="currentColor" stroke-width="2.5"/></svg>
+        </div>
+        <div class="glyph" title="Triangle / force">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3L22 21H2L12 3Z"/></svg>
+        </div>
+        <div class="glyph" title="Bars / structure">
+          <svg viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="4" width="5" height="16"/><rect x="10" y="9" width="5" height="11"/><rect x="17" y="6" width="5" height="14"/></svg>
+        </div>
+        <div class="glyph" title="Arrow / passage">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.5"/></svg>
+        </div>
+        <div class="glyph" title="Crosshair / locus">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="7" stroke="currentColor" stroke-width="2.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="2.5"/></svg>
+        </div>
+        <div class="glyph" title="Diagonal / tension">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 20L20 4M7 20h-3v-3M20 7V4h-3" stroke="currentColor" stroke-width="2.5"/></svg>
+        </div>
+      </nav>
+
+      <article class="article">
+        <p class="standfirst">A psychogeographic dérive through twenty-four hours of a rented house near Angoulême — compiled from field notes, diary fragments, chalkboard residue, and the four song-vessels of the day. Method: the Situationist dérive. Object: not the holiday as spectacle, but the ambiences that seize the body when it refuses the itinerary.</p>
+
+        <blockquote>
+          The dérive is a technique of rapid passage through varied ambiences. It is entirely different from the classic notions of journey or stroll. In a dérive one or more persons during a certain period drop their relations, their work and leisure activities, and all their other usual motives for movement and action, and let themselves be drawn by the attractions of the terrain and the encounters they find there.
+          <cite>— Guy Debord, Theory of the Dérive (1956)</cite>
+        </blockquote>
+
+        <p class="drift">This is not a diary but a continuous map of atmospheres, a single sentence stretched across the clockface of a day: the house falls silent after the last voice and keeps processing us anyway, history embedding itself in stone walls where Latin and Germanic words still mingle in the mortar, while the air conditioner, small machine of recuperated leisure, sucks unwanted heat from bedrooms so that sleep, always provisional, can approach, and outside the insects feed on warm skin and alcoholic blood, and unresolved questions return with the same insistence as the bites — sleeping in the heat, relaxing in a holiday economy where even relaxation is formatted in advance — and in that dark hour memories move down the spinal cord like paths through an old city, genetically encoded past surfacing as terrain, a neurological geography where the body is a delta of dividing and recombining flows, hamstring bruised and aching, a friend’s knee now 3D-printed after years of skiing and fell running, every tendon and implant confirming the same proposition that all of us are fighting entropy by metabolising borrowed energy in food, wine, humour, friendship, sunshine, music, sport, water, air, light, and then the night pool calls, lightning forking above advancing smoke from fires out west where land meets sea, warm breezes fanning distant flames and carrying their residue toward the hilled town with basilica bells, and we submerge ourselves in dark water because healing does not advertise itself, because the pool is the true unitary space of the drift, neither wilderness nor interior, public yet private, controlled nature, mirror that distorts, voice-changer, place where reflecting and refracting are not metaphors but method, and before dawn the tune arrives — <em>I Don’t Live Here Anymore</em>, we danced to Desolation Row, a reference to a reference — and not-belonging sharpens into the exact psychogeographic condition of temporary dwelling, chalk on the sliding door still insisting that day ends, darkness descends, the blue hour holds the warmth, night awaits the blue hour, silhouettes shape, night awakes, memories persist, and then emergence begins not as event but as sequence, rising blinds, rising coffee, rising temperature, people rising, peaches in the bowl warming, silence emerging from noise, wind from stillness, light from shadows, sleep from tiredness, food from land, words from thoughts, images from entangled chalk, meals from leftovers, fuzzy consciousness from last night’s wine, awaking and sitting with the morning while vegetation floats in the pool as living debris, open-system evidence that nothing here is static and everything is energy reorganising itself, and the body runs its ritual chain sleep to wake to shower to coffee to water, sunlight flashes off windows, the pool cover retreats, Otis and Griffo get up, still water receives us, and the instruction is simple — become porous, do not force songs, collect thresholds: doorways, pool edges, shutters opening and shutting like eyelids, garden gates, markets before opening, the silence after everyone goes to bed — so the market appears as surprise alongside olive flavour, pool cleanliness, hammock peace, mid-morning breeze, coffee circulating as social metabolism while insects wake and people disperse through rooms that are not theirs, and the guiding question keeps writing itself on every wall and skin and stone: what becomes possible because these two things meet, stranger plus language, skin plus water, heat plus stone, child plus echo, tree plus wind, silence plus sun, railings plus towels, shutters plus palm tree, lizard plus roof, swing plus shade, and then the valley answers with bells as travellers from home meet as friends around the pool with roast chicken and wine and beers and splashes and a site radio and leaves rustling in warm air, and we float above the cool blue surface of our lives where light travels through us without consulting our schedules, infinite arc crossing finite holiday, and a book-seed surfaces — <em>causeways of the sun</em> — beside another image that refuses to leave, light in the pool against stone, and with it the imperative to prepare for a radically new environment with its own internal landscape and logic where old categories are encumbrances, Pandora’s lid unpredictably opening and shutting like the shutters themselves, and in the shade Otis watches kids’ TV in French, otherness becomes weather, Nancy meets the pool, child and adult sketch in chalk, the board records the coming and going of ideas while the house catalyses words and images, legs plus hill, coffee plus milk, food plus wine, delta synapse, AI as philosophical catalyst, synthesis and synthetic philosophy, the third thing that appears when mismatched things are forced to coexist, and at noon the house stretches in beating sun, food eaten and rest won, hammock peace under sparrow song, walls watching drying grass, water warming in the glass, bodies stretched between passing hours until the pool brings cool at last, and the energy account becomes explicit — it gathers in heat around the pool, sunlight beckons, distant fusion enters clear water and returns as refraction and beauty made from borrowed fire — while whirls and eddies collect vegetation and debris in the constant cleaning process and right lunch punctuates a slower day of conversations and children playing, heat pooling, water absorbing, birds withdrawing, shades admitting light but refusing heat, architecture of filtered spectacle, then afternoon sleep as regeneration, body reclaiming what morning spent, hamstring and age refusing to vanish, entropy not abolished but metabolised, relationship to holiday quietly changing from performance to passage, overheard graffiti saying, “I’m living in Tewkesbury, just a normal guy,” and later the drift leaves the property and crosses Angoulême street to street through thresholds in history where time sits in stone and narrow lanes, then returns through doorways holding warm air, through the pump-room door, past the vine arch to the BBQ, along the pool edge and chalk door, protective containment as micro-urbanism, while older landscapes reactivate — climbing in the Cotswolds and Wye Valley, gritstone gods and slate-punks of the 80s, absence meeting memory, head hands hips and feet compelled by rhythms in warm air — sun and drawing and meeting, shine combine, line combine, pool and ball and emersion and ripples and reflection, and evening gathers mountain tales of Skye and the Aonach Eagach ridge and Tryfan and the English lakes, paella and good wine and company, old acquaintance becoming new friend through exchanged memorabilia from forty years ago, history embedding in conversation the way it embeds in stone, smoke still drifting east while we eat chicken and drink wine inside warm walls, and at last energy begins to dissipate in cool evening breezes that fight sun-heat they cannot defeat, because the sun wins each day and loses each night, and so roast Périgord chicken arrives with white Bordeaux, roast vegetables and this morning’s bread, good company and the gentle sounds of mystic, Joseph storytelling for Otis and reading to Nancy, narrative itself another metabolic loop, and now the blue-hour discipline: twenty minutes outside, do not write, only notice transitions because themes live there and never in conclusions, day ends, darkness descends, silhouettes shape, night awakes, pool remains liminal studio neither land nor sea, and by full evening insects grow louder than people, chlorine mixes with lavender, air equalises, smells travel further, voices quieten, bats replace swallows, pétanque remains unplayed and therefore pure potential, the dérive’s unfinished architecture, four nightly questions persist — what surprised me, what remained unresolved, what relationship changed, which image refuses to leave — and then chalk returns, drawing returns, entangled marks flowing like a river to sea, children and adults sketching while the house keeps processing voices, four centuries of sound merging with tonight’s laughter, and still the practical ethic remains: leave with fragments, voice notes, images, melodic seeds, not polished products, because song emerges later from relation rather than intent, because sun to vines to grapes to wine to people to stories to songs is one current and sun to pool to evaporation to clouds to rain to rivers is another and neither current is separate from us, because nothing exists alone and everything borrows energy, because these songs are not about France but about what became possible when a body and this place briefly interacted, because night awaits the blue hour even after it has passed, because this afternoon assembled itself from chlorine, dust, insects and waiting, because nobody arrived and the afternoon became us instead, and because the dérive never concludes, it loops through twenty-four ambiences until the rented house releases its temporary dwellers back into ordinary time carrying the third things that appeared when skin met water, absence met memory, old friends met after forty years, lightning met the dark pool, and thought met stone, and the only usable ending is still the same imperative: loosen the grip, enter the flow, fight entropy, float.</p>
+
+        <p class="sources">Sources for this drift: Holiday Notes (Emergence, Metabolism, Energy, The pool, Thresholds, Transitions, Encounters, House as living process, Songwriting in Liminality, and related conversations); Diary 2026-07-19 through 2026-07-23; Songs — (Fighting entropy), The life of water, Causeways of the sun, The blue hour; chalkboard and pool photographs as ambient documents.</p>
+      </article>
+    </div>
+
+    <footer class="footer">
+      <div class="tag"><i aria-hidden="true"></i> Loosen the grip · Enter the flow</div>
+      <div>Fight entropy · Float</div>
+    </footer>
+  </main>
+</body>
+</html>
