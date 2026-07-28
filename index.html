@@ -345,6 +345,50 @@
       color: var(--chalk-yellow);
     }
 
+    .entry--reveal .entry-card {
+      background: #0a0a0a;
+      border: 3px solid #2a2a2a;
+      box-shadow: 10px 10px 0 rgba(245, 230, 168, 0.35);
+      padding: clamp(1.25rem, 3vw, 2rem);
+      color: #e8e4d8;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .entry--reveal .entry-card::before {
+      content: "";
+      position: absolute;
+      width: 5.5rem;
+      height: 5.5rem;
+      border-radius: 50%;
+      top: -1.25rem;
+      right: -1rem;
+      background: radial-gradient(circle, rgba(245, 230, 168, 0.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .entry--reveal .entry-label {
+      color: var(--chalk-yellow);
+      letter-spacing: 0.14em;
+    }
+
+    .entry--reveal .entry-title {
+      font-family: "Archivo Black", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #f5e6a8;
+    }
+
+    .entry--reveal .entry-summary {
+      color: #b8b3a6;
+      border-left: 0.45rem solid #3a3a3a;
+      padding-left: 0.85rem;
+    }
+
+    .entry--reveal .entry-link a {
+      color: var(--chalk-yellow);
+    }
+
     .entry--bauhaus .entry-card {
       background: var(--paper-bright);
       border: 3px solid var(--black);
@@ -523,6 +567,21 @@
           </p>
           <p class="entry-link">
             <a href="content/holiday-drift-2026.html">Open Holiday Drift →</a>
+          </p>
+        </article>
+      </li>
+
+      <li class="entry entry--reveal">
+        <article class="entry-card">
+          <span class="entry-label">Chalk / reveal / touch</span>
+          <h2 class="entry-title">
+            <a href="content/chalk.html">Chalk</a>
+          </h2>
+          <p class="entry-summary">
+            A chalkboard photograph kept in the dark until a circular window of light follows the mouse or fingertip — residue only where you look.
+          </p>
+          <p class="entry-link">
+            <a href="content/chalk.html">Open Chalk →</a>
           </p>
         </article>
       </li>
