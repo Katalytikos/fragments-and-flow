@@ -15,7 +15,8 @@
       --black: #0a0a0a;
       --paper: #f2efe8;
       --ink: #141414;
-      --max: 68rem;
+      --max: 72rem;
+      --gap: 1rem 0.85rem;
     }
 
     * {
@@ -91,7 +92,7 @@
 
     .lead {
       position: relative;
-      margin: 0 0 2.75rem;
+      margin: 0 0 2.25rem;
       padding: 1.75rem 1.5rem 1.85rem 1.35rem;
       background: var(--black);
       color: var(--paper);
@@ -123,61 +124,66 @@
       font-weight: 400;
     }
 
-    .montage {
+    .wall {
       display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 1rem 0.85rem;
-      align-items: start;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: var(--gap);
+      margin: 0;
+      padding: 0;
     }
 
-    .fragment {
+    .frame {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
       margin: 0;
-      font-size: 0.62rem;
-      letter-spacing: 0.06em;
+      min-width: 0;
+    }
+
+    .frame figure {
+      margin: 0;
+      aspect-ratio: 1 / 1;
+      width: 100%;
+      overflow: hidden;
+      border: 3px solid var(--black);
+      background: var(--black);
+      box-shadow: 5px 5px 0 var(--blue);
+    }
+
+    .frame:nth-child(3n) figure {
+      box-shadow: 5px 5px 0 var(--red);
+    }
+
+    .frame:nth-child(3n + 2) figure {
+      box-shadow: 5px 5px 0 var(--yellow);
+    }
+
+    .frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .frame .frag {
+      margin: 0;
+      min-height: 2.6rem;
+      font-size: 0.58rem;
+      letter-spacing: 0.05em;
       line-height: 1.35;
       text-transform: lowercase;
       color: color-mix(in srgb, var(--ink) 72%, var(--blue));
-      max-width: 14rem;
-      padding: 0.55rem 0.65rem;
-      background: color-mix(in srgb, var(--paper) 92%, white);
-      border-left: 2px solid var(--red);
-      box-shadow: 6px 6px 0 var(--blue);
-      align-self: center;
-      justify-self: start;
-      grid-column: span 3;
-      z-index: 1;
+      padding: 0.2rem 0.15rem 0;
+      border-top: 2px solid var(--red);
     }
 
-    .fragment--wide {
-      max-width: 18rem;
-      grid-column: span 4;
+    .frame:nth-child(3n) .frag {
+      border-top-color: var(--blue);
     }
 
-    .fragment--offset {
-      transform: rotate(-2deg);
-      box-shadow: 6px 6px 0 var(--red);
-    }
-
-    .fragment--tilt {
-      transform: rotate(1.5deg);
-      border-left-color: var(--blue);
-      box-shadow: 6px 6px 0 var(--yellow);
-    }
-
-    .fragment--yellow {
-      border-left-color: var(--yellow);
-      color: var(--black);
-      box-shadow: 6px 6px 0 var(--red);
-    }
-
-    .fragment:nth-child(4n) {
-      justify-self: center;
-      grid-column: span 4;
-    }
-
-    .fragment:nth-child(5n) {
-      justify-self: end;
-      grid-column: span 3;
+    .frame:nth-child(3n + 2) .frag {
+      border-top-color: var(--yellow);
     }
 
     .footer {
@@ -190,18 +196,15 @@
       font-weight: 700;
     }
 
-    @media (max-width: 720px) {
-      .montage {
-        grid-template-columns: 1fr;
+    @media (max-width: 900px) {
+      .wall {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
+    }
 
-      .fragment,
-      .fragment--wide,
-      .fragment:nth-child(4n),
-      .fragment:nth-child(5n) {
-        grid-column: span 1;
-        max-width: none;
-        justify-self: stretch;
+    @media (max-width: 560px) {
+      .wall {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
   </style>
@@ -225,32 +228,90 @@
         </p>
       </header>
 
-      <section class="montage" aria-label="Pool text montage">
-        <p class="fragment fragment--offset">reflecting refracting · alive!</p>
-        <p class="fragment fragment--tilt">pool surface</p>
-        <p class="fragment">the edge of the pool</p>
-        <p class="fragment fragment--yellow">light in the pool and contrasts with the stone</p>
-        <p class="fragment fragment--wide">splashes · sun · music from a site radio</p>
-        <p class="fragment">energy gathers in the heat round the pool</p>
-        <p class="fragment fragment--tilt">whirls and eddies collecting vegetation and debris</p>
-        <p class="fragment fragment--offset">the pool warms in the sun — distant fusion taken in by clear water</p>
-        <p class="fragment">emersion in the pool · submerging in the still water</p>
-        <p class="fragment fragment--yellow">night awaits the blue hour</p>
-        <p class="fragment">we submerge ourselves in the dark water</p>
-        <p class="fragment fragment--wide">nancy and the pool · the pool and the ball</p>
-        <p class="fragment fragment--tilt">the light playing in the pool</p>
-        <p class="fragment">a slower day — slow flow of conversations and children playing</p>
-        <p class="fragment fragment--offset">as the pool brings cool at last</p>
-        <p class="fragment fragment--yellow">the pool cover retreating</p>
-        <p class="fragment">from the pool the heat subsides · the pool awaits</p>
-        <p class="fragment fragment--tilt">the healing power of water · ripples · flowing across the skin</p>
-        <p class="fragment">cleanliness of the pool · neither land nor sea</p>
-        <p class="fragment fragment--wide">the pool retreats and sets itself aside — hides to wait once more for sun</p>
+      <section class="wall" aria-label="Pool photograph wall">
+        <article class="frame">
+          <figure>
+            <img src="pool-images/IMG_4543.jpeg" alt="Pool photograph" width="800" height="800" loading="lazy" decoding="async" />
+          </figure>
+          <p class="frag">reflecting refracting · alive!</p>
+        </article>
+        <article class="frame">
+          <figure>
+            <img src="pool-images/IMG_4544.jpeg" alt="Pool photograph" width="800" height="800" loading="lazy" decoding="async" />
+          </figure>
+          <p class="frag">pool surface</p>
+        </article>
+        <article class="frame">
+          <figure>
+            <img src="pool-images/IMG_4549.jpeg" alt="Pool photograph" width="800" height="800" loading="lazy" decoding="async" />
+          </figure>
+          <p class="frag">the edge of the pool</p>
+        </article>
+        <article class="frame">
+          <figure>
+            <img src="pool-images/IMG_4551.jpeg" alt="Pool photograph" width="800" height="800" loading="lazy" decoding="async" />
+          </figure>
+          <p class="frag">light in the pool and contrasts with the stone</p>
+        </article>
+        <article class="frame">
+          <figure>
+            <img src="pool-images/IMG_4552.jpeg" alt="Pool photograph" width="800" height="800" loading="lazy" decoding="async" />
+          </figure>
+          <p class="frag">splashes · sun · music from a site radio</p>
+        </article>
+        <article class="frame">
+          <figure>
+            <img src="pool-images/IMG_4553.jpeg" alt="Pool photograph" width="800" height="800" loading="lazy" decoding="async" />
+          </figure>
+          <p class="frag">energy gathers in the heat round the pool</p>
+        </article>
+        <article class="frame">
+          <figure>
+            <img src="pool-images/IMG_4557.jpeg" alt="Pool photograph" width="800" height="800" loading="lazy" decoding="async" />
+          </figure>
+          <p class="frag">whirls and eddies collecting vegetation and debris</p>
+        </article>
+        <article class="frame">
+          <figure>
+            <img src="pool-images/IMG_4558.jpeg" alt="Pool photograph" width="800" height="800" loading="lazy" decoding="async" />
+          </figure>
+          <p class="frag">the pool warms in the sun — distant fusion taken in by clear water</p>
+        </article>
+        <article class="frame">
+          <figure>
+            <img src="pool-images/IMG_4559.jpeg" alt="Pool photograph" width="800" height="800" loading="lazy" decoding="async" />
+          </figure>
+          <p class="frag">emersion in the pool · submerging in the still water</p>
+        </article>
+        <article class="frame">
+          <figure>
+            <img src="pool-images/IMG_4561.jpeg" alt="Pool photograph" width="800" height="800" loading="lazy" decoding="async" />
+          </figure>
+          <p class="frag">night awaits the blue hour</p>
+        </article>
+        <article class="frame">
+          <figure>
+            <img src="pool-images/IMG_4569.jpeg" alt="Pool photograph" width="800" height="800" loading="lazy" decoding="async" />
+          </figure>
+          <p class="frag">we submerge ourselves in the dark water</p>
+        </article>
+        <article class="frame">
+          <figure>
+            <img src="pool-images/IMG_4570.jpeg" alt="Pool photograph" width="800" height="800" loading="lazy" decoding="async" />
+          </figure>
+          <p class="frag">nancy and the pool · the pool and the ball</p>
+        </article>
+        <article class="frame">
+          <figure>
+            <img src="pool-images/IMG_4571.jpeg" alt="Pool photograph" width="800" height="800" loading="lazy" decoding="async" />
+          </figure>
+          <p class="frag">the light playing in the pool · as the pool brings cool at last</p>
+        </article>
       </section>
 
       <footer class="footer">
         <a href="../index.html">← Contents</a>
-        · Montage · holiday-songwriting fragments · Bauhaus grid
+        · Photo wall · holiday-songwriting fragments · Bauhaus grid
       </footer>
     </div>
   </div>
