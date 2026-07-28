@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Final — Fragments &amp; Flow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #f7f3ea;
+      --shadow: rgba(12, 10, 8, 0.55);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      min-height: 100dvh;
+    }
+
+    body {
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: clamp(1.5rem, 5vw, 3rem);
+      color: var(--ink);
+      font-family: "Kalam", "Segoe Print", "Comic Sans MS", cursive;
+      background-color: #1a1612;
+      background-image: url("IMG_4629.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at center, rgba(20, 16, 12, 0.28) 0%, rgba(10, 8, 6, 0.52) 100%),
+        linear-gradient(180deg, rgba(12, 10, 8, 0.35), rgba(12, 10, 8, 0.45));
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .words {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      max-width: 38rem;
+      text-align: center;
+      font-size: clamp(1.35rem, 3.2vw, 2rem);
+      font-weight: 400;
+      line-height: 1.55;
+      letter-spacing: 0.01em;
+      text-wrap: pretty;
+      text-shadow:
+        0 1px 2px var(--shadow),
+        0 2px 18px rgba(0, 0, 0, 0.45);
+    }
+  </style>
+</head>
+<body>
+  <p class="words">
+    The house processes the laughter, conversation and love among friends,
+    creating history embedded in the stone walls, merging with the sounds heard
+    and remembered through four centuries&hellip; we travel onwards
+  </p>
+</body>
+</html>
