@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pool Images — Fragments &amp; Flow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;700&family=Lexend:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red: #c41e1e;
+      --blue: #1d4ed8;
+      --yellow: #f5c400;
+      --black: #0a0a0a;
+      --paper: #f2efe8;
+      --ink: #141414;
+      --max: 68rem;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, var(--yellow) 0 0.45rem, transparent 0.45rem),
+        linear-gradient(180deg, var(--paper) 0 55%, color-mix(in srgb, var(--blue) 8%, var(--paper)) 100%);
+      font-family: "Jost", "Futura", "Avenir Next", sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    a {
+      color: var(--blue);
+      text-underline-offset: 0.2em;
+    }
+
+    a:hover {
+      color: var(--red);
+    }
+
+    .rail {
+      display: flex;
+      align-items: stretch;
+      min-height: 100vh;
+    }
+
+    .rail-bar {
+      width: 0.55rem;
+      flex-shrink: 0;
+      background: linear-gradient(180deg, var(--red) 0 33%, var(--blue) 33% 66%, var(--yellow) 66% 100%);
+    }
+
+    .page {
+      flex: 1;
+      width: min(100% - 2rem, var(--max));
+      margin: 0 auto;
+      padding: 1.75rem 0 3.5rem;
+    }
+
+    .nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.25rem;
+      align-items: center;
+      margin-bottom: 2rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .nav a {
+      text-decoration: none;
+      color: var(--black);
+    }
+
+    .nav a:hover {
+      text-decoration: underline;
+    }
+
+    .nav .dot {
+      width: 0.55rem;
+      height: 0.55rem;
+      background: var(--red);
+      border-radius: 50%;
+    }
+
+    .lead {
+      position: relative;
+      margin: 0 0 2.75rem;
+      padding: 1.75rem 1.5rem 1.85rem 1.35rem;
+      background: var(--black);
+      color: var(--paper);
+      max-width: 42rem;
+    }
+
+    .lead::before {
+      content: "";
+      position: absolute;
+      left: -0.55rem;
+      top: 1.25rem;
+      width: 0.55rem;
+      height: 4.5rem;
+      background: var(--yellow);
+    }
+
+    .lead p {
+      margin: 0;
+      font-family: "Lexend", "Jost", sans-serif;
+      font-weight: 300;
+      font-size: clamp(1.05rem, 2.4vw, 1.28rem);
+      line-height: 1.65;
+      letter-spacing: 0.01em;
+    }
+
+    .lead em {
+      font-style: normal;
+      color: var(--yellow);
+      font-weight: 400;
+    }
+
+    .montage {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 0.85rem 0.75rem;
+      align-items: start;
+    }
+
+    .cell {
+      position: relative;
+      margin: 0;
+      overflow: hidden;
+      background: var(--black);
+      border: 3px solid var(--black);
+    }
+
+    .cell img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      vertical-align: middle;
+    }
+
+    .cell--a { grid-column: span 7; min-height: 14rem; }
+    .cell--b { grid-column: span 5; min-height: 11rem; }
+    .cell--c { grid-column: span 4; min-height: 10rem; }
+    .cell--d { grid-column: span 4; min-height: 12rem; }
+    .cell--e { grid-column: span 4; min-height: 9rem; }
+    .cell--f { grid-column: span 6; min-height: 13rem; }
+    .cell--g { grid-column: span 6; min-height: 13rem; }
+    .cell--h { grid-column: span 5; min-height: 11rem; }
+    .cell--i { grid-column: span 7; min-height: 12rem; }
+    .cell--j { grid-column: span 3; min-height: 8rem; }
+    .cell--k { grid-column: span 5; min-height: 10rem; }
+    .cell--l { grid-column: span 4; min-height: 11rem; }
+    .cell--m { grid-column: span 8; min-height: 14rem; }
+    .cell--n { grid-column: span 4; min-height: 10rem; }
+    .cell--o { grid-column: span 6; min-height: 12rem; }
+
+    .cell:nth-child(3n) {
+      box-shadow: 8px 8px 0 var(--red);
+    }
+
+    .cell:nth-child(3n + 1) {
+      box-shadow: 8px 8px 0 var(--blue);
+    }
+
+    .cell:nth-child(3n + 2) {
+      box-shadow: 8px 8px 0 var(--yellow);
+    }
+
+    .fragment {
+      margin: 0;
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      line-height: 1.35;
+      text-transform: lowercase;
+      color: color-mix(in srgb, var(--ink) 72%, var(--blue));
+      max-width: 11rem;
+      padding: 0.35rem 0.5rem;
+      background: color-mix(in srgb, var(--paper) 92%, white);
+      border-left: 2px solid var(--red);
+      align-self: center;
+      justify-self: center;
+      z-index: 1;
+    }
+
+    .fragment--wide {
+      max-width: 14rem;
+      grid-column: span 3;
+    }
+
+    .fragment--offset {
+      transform: rotate(-2deg);
+    }
+
+    .fragment--tilt {
+      transform: rotate(1.5deg);
+      border-left-color: var(--blue);
+    }
+
+    .fragment--yellow {
+      border-left-color: var(--yellow);
+      color: var(--black);
+    }
+
+    .footer {
+      margin-top: 2.5rem;
+      padding-top: 1rem;
+      border-top: 3px solid var(--black);
+      font-size: 0.68rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    @media (max-width: 720px) {
+      .montage {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .cell--a,
+      .cell--b,
+      .cell--c,
+      .cell--d,
+      .cell--e,
+      .cell--f,
+      .cell--g,
+      .cell--h,
+      .cell--i,
+      .cell--j,
+      .cell--k,
+      .cell--l,
+      .cell--m,
+      .cell--n,
+      .cell--o,
+      .fragment--wide {
+        grid-column: span 1;
+        min-height: 9rem;
+      }
+
+      .fragment {
+        grid-column: span 2;
+        max-width: none;
+        justify-self: stretch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="rail">
+    <div class="rail-bar" aria-hidden="true"></div>
+    <div class="page">
+      <nav class="nav" aria-label="Site">
+        <span class="dot" aria-hidden="true"></span>
+        <a href="../index.html">Fragments &amp; flow</a>
+        <span aria-hidden="true">/</span>
+        <span>Pool images</span>
+      </nav>
+
+      <header class="lead">
+        <p>
+          We float above the cool blue surface of our lives across which light is shaped &mdash;
+          <em>reflected</em> &mdash; <em>refracted</em>. Distant waves travel through us in their
+          infinite arc across the universe
+        </p>
+      </header>
+
+      <section class="montage" aria-label="Pool photograph montage">
+        <figure class="cell cell--a">
+          <img src="pool-images/IMG_4112.jpeg" alt="Pool at Angoulême — water surface and light" width="1200" height="900" loading="lazy" decoding="async" />
+        </figure>
+        <p class="fragment fragment--offset">reflecting refracting · alive!</p>
+
+        <figure class="cell cell--b">
+          <img src="pool-images/IMG_4561.jpeg" alt="Pool surface threshold" width="1200" height="900" loading="lazy" decoding="async" />
+        </figure>
+        <p class="fragment fragment--tilt">pool surface</p>
+
+        <figure class="cell cell--c">
+          <img src="pool-images/IMG_4559.jpeg" alt="Edge of the pool" width="1200" height="900" loading="lazy" decoding="async" />
+        </figure>
+        <p class="fragment">the edge of the pool</p>
+
+        <figure class="cell cell--d">
+          <img src="pool-images/IMG_4558.jpeg" alt="Stone and water at the pool" width="1200" height="900" loading="lazy" decoding="async" />
+        </figure>
+        <p class="fragment fragment--yellow">light in the pool and contrasts with the stone</p>
+
+        <figure class="cell cell--e">
+          <img src="pool-images/image-2.jpg" alt="Around the pool — afternoon" width="1200" height="900" loading="lazy" decoding="async" />
+        </figure>
+        <p class="fragment fragment--wide">splashes · sun · music from a site radio</p>
+
+        <figure class="cell cell--f">
+          <img src="pool-images/IMG_4549.jpeg" alt="Pool warming in sun" width="1200" height="900" loading="lazy" decoding="async" />
+        </figure>
+        <p class="fragment">energy gathers in the heat round the pool</p>
+
+        <figure class="cell cell--g">
+          <img src="pool-images/IMG_4552.jpeg" alt="Clear water and vegetation at pool edge" width="1200" height="900" loading="lazy" decoding="async" />
+        </figure>
+        <p class="fragment fragment--tilt">whirls and eddies collecting vegetation and debris</p>
+
+        <p class="fragment fragment--offset">the pool warms in the sun — distant fusion taken in by clear water</p>
+        <figure class="cell cell--h">
+          <img src="pool-images/IMG_4538.jpeg" alt="Submerging in still pool water" width="1200" height="900" loading="lazy" decoding="async" />
+        </figure>
+
+        <figure class="cell cell--i">
+          <img src="pool-images/IMG_4578.jpeg" alt="Immersion in the pool" width="1200" height="900" loading="lazy" decoding="async" />
+        </figure>
+        <p class="fragment">emersion in the pool · submerging in the still water</p>
+
+        <figure class="cell cell--j">
+          <img src="pool-images/IMG_4571.jpeg" alt="Blue hour at the pool" width="1200" height="900" loading="lazy" decoding="async" />
+        </figure>
+        <p class="fragment fragment--yellow">night awaits the blue hour</p>
+
+        <figure class="cell cell--k">
+          <img src="pool-images/image-1-1.jpg" alt="Pool at night" width="1200" height="900" loading="lazy" decoding="async" />
+        </figure>
+        <p class="fragment">we submerge ourselves in the dark water</p>
+
+        <figure class="cell cell--l">
+          <img src="pool-images/IMG_4579.jpeg" alt="Friends around the pool" width="1200" height="900" loading="lazy" decoding="async" />
+        </figure>
+        <p class="fragment fragment--wide">nancy and the pool · the pool and the ball</p>
+
+        <p class="fragment fragment--tilt">the light playing in the pool</p>
+        <figure class="cell cell--m">
+          <img src="pool-images/IMG_4589.jpeg" alt="Light on pool water" width="1200" height="900" loading="lazy" decoding="async" />
+        </figure>
+
+        <figure class="cell cell--n">
+          <img src="pool-images/IMG_4600.jpeg" alt="Children playing in the pool" width="1200" height="900" loading="lazy" decoding="async" />
+        </figure>
+        <p class="fragment">a slower day — slow flow of conversations and children playing</p>
+
+        <figure class="cell cell--o">
+          <img src="pool-images/IMG_4580.jpeg" alt="Cool at last — pool brings relief" width="1200" height="900" loading="lazy" decoding="async" />
+        </figure>
+        <p class="fragment fragment--offset">as the pool brings cool at last</p>
+        <p class="fragment fragment--yellow">the pool cover retreating</p>
+        <p class="fragment">from the pool the heat subsides · the pool awaits</p>
+        <p class="fragment fragment--tilt">the healing power of water · ripples · flowing across the skin</p>
+        <p class="fragment">cleanliness of the pool · neither land nor sea</p>
+        <p class="fragment fragment--wide">the pool retreats and sets itself aside — hides to wait once more for sun</p>
+      </section>
+
+      <footer class="footer">
+        <a href="../index.html">← Contents</a>
+        · Montage · holiday-songwriting fragments · Bauhaus grid
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
