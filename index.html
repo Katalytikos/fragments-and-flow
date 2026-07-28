@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fragments &amp; Flow — Contents</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Staatliches&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --red: #d61f1f;
+      --red-deep: #9b0f0f;
+      --black: #111111;
+      --ink: #1a1a1a;
+      --paper: #eceae4;
+      --paper-bright: #f7f5ef;
+      --steel: #2f343a;
+      --yellow: #efc400;
+      --sky: #8ecae6;
+      --wall: #f6d55c;
+      --water: #00a6d6;
+      --deep-water: #0077b6;
+      --accent: #ff6b35;
+      --pool-paper: #fffaf0;
+      --max: 72rem;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, var(--sky) 0 22%, transparent 22% 100%),
+        linear-gradient(135deg, rgba(214, 31, 31, 0.07) 0 20%, transparent 20% 100%),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 47px,
+          rgba(17, 17, 17, 0.03) 47px,
+          rgba(17, 17, 17, 0.03) 48px
+        ),
+        linear-gradient(160deg, var(--paper-bright), var(--paper) 45%, color-mix(in srgb, var(--wall) 35%, var(--paper)) 75%, color-mix(in srgb, var(--water) 18%, #e2dfd6));
+      font-family: "Space Grotesk", "Futura", "Avenir Next", sans-serif;
+      line-height: 1.55;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 0.18em;
+    }
+
+    a:hover {
+      color: var(--red);
+    }
+
+    .signal-bar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: 0.7rem;
+      background: linear-gradient(180deg, var(--red) 0 55%, var(--deep-water) 55% 100%);
+      z-index: 20;
+    }
+
+    .water-band {
+      position: fixed;
+      inset: auto 0 0 0;
+      height: 0.55rem;
+      background: linear-gradient(90deg, var(--deep-water), var(--water), var(--accent));
+      z-index: 20;
+    }
+
+    .frame {
+      position: relative;
+      width: min(100% - 2rem, var(--max));
+      margin: 0 auto;
+      padding: 1.75rem 0 4rem;
+    }
+
+    .top-rail {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    .mark {
+      width: 3.2rem;
+      height: 3.2rem;
+      display: grid;
+      place-items: center;
+      background: var(--black);
+      color: var(--yellow);
+    }
+
+    .mark svg {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+
+    .top-rail p {
+      margin: 0;
+      font-family: "Staatliches", sans-serif;
+      letter-spacing: 0.14em;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+    }
+
+    .index-badge {
+      font-family: "Staatliches", sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      padding: 0.45rem 0.75rem;
+      border: 2px solid var(--deep-water);
+      background: color-mix(in srgb, var(--pool-paper) 88%, var(--sky) 12%);
+      color: var(--deep-water);
+    }
+
+    .hero {
+      position: relative;
+      margin-bottom: 2.5rem;
+      padding: 2rem 1.75rem 2.25rem;
+      background: var(--black);
+      color: white;
+      clip-path: polygon(0 0, 100% 0, 100% 90%, 96% 100%, 0 100%);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: auto -8% -25% auto;
+      width: 45%;
+      height: 75%;
+      background: var(--red);
+      transform: rotate(-14deg);
+      z-index: 0;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: 12%;
+      top: 1.25rem;
+      width: 3.5rem;
+      height: 3.5rem;
+      border-radius: 50%;
+      background: var(--sky);
+      border: 4px solid var(--wall);
+      z-index: 0;
+      opacity: 0.85;
+    }
+
+    .hero-kicker {
+      position: relative;
+      z-index: 1;
+      margin: 0 0 0.75rem;
+      font-family: "Staatliches", sans-serif;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--yellow);
+      font-size: 0.95rem;
+    }
+
+    .hero h1 {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-family: "Archivo Black", sans-serif;
+      font-size: clamp(2.2rem, 6vw, 4rem);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      max-width: 14ch;
+    }
+
+    .hero-lead {
+      position: relative;
+      z-index: 1;
+      margin: 1rem 0 0;
+      max-width: 48ch;
+      font-size: 1.05rem;
+      color: #f2f2f2;
+    }
+
+    .catalog {
+      display: grid;
+      gap: 1.75rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .entry {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+
+    .entry--drift .entry-card {
+      background: rgba(255, 255, 255, 0.78);
+      border: 3px solid var(--black);
+      box-shadow: 10px 10px 0 rgba(214, 31, 31, 0.85);
+      padding: clamp(1.25rem, 3vw, 2rem);
+      position: relative;
+    }
+
+    .entry--drift .entry-card::before {
+      content: "";
+      position: absolute;
+      top: -0.65rem;
+      right: 1.25rem;
+      width: 2rem;
+      height: 2rem;
+      background: var(--yellow);
+      border: 2px solid var(--black);
+      transform: rotate(10deg);
+    }
+
+    .entry--pool .entry-card {
+      background: color-mix(in srgb, var(--pool-paper) 92%, white 8%);
+      border: 5px solid var(--deep-water);
+      box-shadow: 12px 12px 0 color-mix(in srgb, var(--accent) 35%, transparent);
+      padding: clamp(1.25rem, 3vw, 2rem);
+    }
+
+    .entry-label {
+      display: inline-block;
+      margin: 0 0 0.65rem;
+      font-family: "Staatliches", sans-serif;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.82rem;
+    }
+
+    .entry--drift .entry-label {
+      color: var(--red);
+    }
+
+    .entry--pool .entry-label {
+      color: var(--deep-water);
+    }
+
+    .entry-title {
+      margin: 0 0 0.85rem;
+      font-size: clamp(1.35rem, 3vw, 1.85rem);
+      line-height: 1.15;
+    }
+
+    .entry--drift .entry-title {
+      font-family: "Archivo Black", sans-serif;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+    }
+
+    .entry--pool .entry-title {
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 700;
+    }
+
+    .entry-title a {
+      text-decoration: none;
+    }
+
+    .entry-title a:hover {
+      text-decoration: underline;
+      text-decoration-color: currentColor;
+    }
+
+    .entry-summary {
+      margin: 0;
+      max-width: 65ch;
+      font-size: 1.02rem;
+      line-height: 1.65;
+    }
+
+    .entry--drift .entry-summary {
+      border-left: 0.55rem solid var(--red);
+      padding-left: 1rem;
+      background: linear-gradient(90deg, rgba(214, 31, 31, 0.06), transparent 70%);
+    }
+
+    .entry--pool .entry-summary {
+      color: var(--ink);
+    }
+
+    .entry-link {
+      display: inline-block;
+      margin-top: 1.1rem;
+      font-family: "Staatliches", sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 0.92rem;
+    }
+
+    .entry--drift .entry-link a {
+      color: var(--red-deep);
+    }
+
+    .entry--pool .entry-link a {
+      color: var(--deep-water);
+    }
+
+    .footer {
+      margin-top: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      font-family: "Staatliches", sans-serif;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 0.88rem;
+    }
+
+    .footer .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      background: var(--black);
+      color: white;
+      padding: 0.55rem 0.8rem;
+    }
+
+    .footer .tag i {
+      width: 0.7rem;
+      height: 0.7rem;
+      background: var(--water);
+      display: inline-block;
+    }
+
+    .footer .tag-drift i {
+      background: var(--red);
+    }
+
+    @media (min-width: 720px) {
+      .catalog {
+        grid-template-columns: 1fr 1fr;
+        align-items: stretch;
+      }
+
+      .entry {
+        height: 100%;
+      }
+
+      .entry-card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .entry-summary {
+        flex: 1;
+      }
+    }
+
+    @media (max-width: 719px) {
+      .entry--drift .entry-card,
+      .entry--pool .entry-card {
+        box-shadow: 6px 6px 0 rgba(214, 31, 31, 0.75);
+      }
+
+      .entry--pool .entry-card {
+        box-shadow: 8px 8px 0 color-mix(in srgb, var(--accent) 35%, transparent);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="signal-bar" aria-hidden="true"></div>
+  <div class="water-band" aria-hidden="true"></div>
+
+  <main class="frame">
+    <header class="top-rail">
+      <div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="4"/>
+          <path d="M24 6V42M6 24H42" stroke="currentColor" stroke-width="4"/>
+          <path d="M12 12L36 36" stroke="#00a6d6" stroke-width="4"/>
+        </svg>
+      </div>
+      <p>Fragments &amp; flow / contents</p>
+      <span class="index-badge">Index</span>
+    </header>
+
+    <section class="hero" aria-labelledby="contents-heading">
+      <p class="hero-kicker">Pages under content/</p>
+      <h1 id="contents-heading">Contents</h1>
+      <p class="hero-lead">An index stitched from constructivist drift and Hockney pool bands — links, titles, and summaries for each page in the collection.</p>
+    </section>
+
+    <ul class="catalog">
+      <li class="entry entry--drift">
+        <article class="entry-card">
+          <span class="entry-label">Unitary dérive / 24h</span>
+          <h2 class="entry-title">
+            <a href="content/holiday-drift-2026.html">Holiday Drift</a>
+          </h2>
+          <p class="entry-summary">
+            A continuous map of atmospheres through twenty-four hours at a rented house near Angoulême — field notes, diary fragments, and chalkboard residue woven into one situationist sentence that loops from night pool to market thresholds, refusing the itinerary while fighting entropy.
+          </p>
+          <p class="entry-link">
+            <a href="content/holiday-drift-2026.html">Open Holiday Drift →</a>
+          </p>
+        </article>
+      </li>
+
+      <li class="entry entry--pool">
+        <article class="entry-card">
+          <span class="entry-label">Pool / poem / three parts</span>
+          <h2 class="entry-title">
+            <a href="content/the-pool.html">The Pool at Angouleme</a>
+          </h2>
+          <p class="entry-summary">
+            A three-part poem of midday heat, travellers at table, and immersion in cool water — from hammock peace and warming glass to the blue hour where silhouettes shape and memories unfold. Visual tone nods to David Hockney&rsquo;s pool light.
+          </p>
+          <p class="entry-link">
+            <a href="content/the-pool.html">Open The Pool →</a>
+          </p>
+        </article>
+      </li>
+    </ul>
+
+    <footer class="footer">
+      <div class="tag tag-drift"><i aria-hidden="true"></i> Loosen the grip · Enter the flow</div>
+      <div class="tag"><i aria-hidden="true"></i> Sky · Wall · Water</div>
+    </footer>
+  </main>
+</body>
+</html>
