@@ -126,52 +126,8 @@
     .montage {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 0.85rem 0.75rem;
+      gap: 1rem 0.85rem;
       align-items: start;
-    }
-
-    .cell {
-      position: relative;
-      margin: 0;
-      overflow: hidden;
-      background: var(--black);
-      border: 3px solid var(--black);
-    }
-
-    .cell img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      vertical-align: middle;
-    }
-
-    .cell--a { grid-column: span 7; min-height: 14rem; }
-    .cell--b { grid-column: span 5; min-height: 11rem; }
-    .cell--c { grid-column: span 4; min-height: 10rem; }
-    .cell--d { grid-column: span 4; min-height: 12rem; }
-    .cell--e { grid-column: span 4; min-height: 9rem; }
-    .cell--f { grid-column: span 6; min-height: 13rem; }
-    .cell--g { grid-column: span 6; min-height: 13rem; }
-    .cell--h { grid-column: span 5; min-height: 11rem; }
-    .cell--i { grid-column: span 7; min-height: 12rem; }
-    .cell--j { grid-column: span 3; min-height: 8rem; }
-    .cell--k { grid-column: span 5; min-height: 10rem; }
-    .cell--l { grid-column: span 4; min-height: 11rem; }
-    .cell--m { grid-column: span 8; min-height: 14rem; }
-    .cell--n { grid-column: span 4; min-height: 10rem; }
-    .cell--o { grid-column: span 6; min-height: 12rem; }
-
-    .cell:nth-child(3n) {
-      box-shadow: 8px 8px 0 var(--red);
-    }
-
-    .cell:nth-child(3n + 1) {
-      box-shadow: 8px 8px 0 var(--blue);
-    }
-
-    .cell:nth-child(3n + 2) {
-      box-shadow: 8px 8px 0 var(--yellow);
     }
 
     .fragment {
@@ -181,32 +137,47 @@
       line-height: 1.35;
       text-transform: lowercase;
       color: color-mix(in srgb, var(--ink) 72%, var(--blue));
-      max-width: 11rem;
-      padding: 0.35rem 0.5rem;
+      max-width: 14rem;
+      padding: 0.55rem 0.65rem;
       background: color-mix(in srgb, var(--paper) 92%, white);
       border-left: 2px solid var(--red);
+      box-shadow: 6px 6px 0 var(--blue);
       align-self: center;
-      justify-self: center;
+      justify-self: start;
+      grid-column: span 3;
       z-index: 1;
     }
 
     .fragment--wide {
-      max-width: 14rem;
-      grid-column: span 3;
+      max-width: 18rem;
+      grid-column: span 4;
     }
 
     .fragment--offset {
       transform: rotate(-2deg);
+      box-shadow: 6px 6px 0 var(--red);
     }
 
     .fragment--tilt {
       transform: rotate(1.5deg);
       border-left-color: var(--blue);
+      box-shadow: 6px 6px 0 var(--yellow);
     }
 
     .fragment--yellow {
       border-left-color: var(--yellow);
       color: var(--black);
+      box-shadow: 6px 6px 0 var(--red);
+    }
+
+    .fragment:nth-child(4n) {
+      justify-self: center;
+      grid-column: span 4;
+    }
+
+    .fragment:nth-child(5n) {
+      justify-self: end;
+      grid-column: span 3;
     }
 
     .footer {
@@ -221,31 +192,14 @@
 
     @media (max-width: 720px) {
       .montage {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
       }
 
-      .cell--a,
-      .cell--b,
-      .cell--c,
-      .cell--d,
-      .cell--e,
-      .cell--f,
-      .cell--g,
-      .cell--h,
-      .cell--i,
-      .cell--j,
-      .cell--k,
-      .cell--l,
-      .cell--m,
-      .cell--n,
-      .cell--o,
-      .fragment--wide {
+      .fragment,
+      .fragment--wide,
+      .fragment:nth-child(4n),
+      .fragment:nth-child(5n) {
         grid-column: span 1;
-        min-height: 9rem;
-      }
-
-      .fragment {
-        grid-column: span 2;
         max-width: none;
         justify-self: stretch;
       }
@@ -271,80 +225,21 @@
         </p>
       </header>
 
-      <section class="montage" aria-label="Pool photograph montage">
-        <figure class="cell cell--a">
-          <img src="pool-images/IMG_4112.jpeg" alt="Pool at Angoulême — water surface and light" width="1200" height="900" loading="lazy" decoding="async" />
-        </figure>
+      <section class="montage" aria-label="Pool text montage">
         <p class="fragment fragment--offset">reflecting refracting · alive!</p>
-
-        <figure class="cell cell--b">
-          <img src="pool-images/IMG_4561.jpeg" alt="Pool surface threshold" width="1200" height="900" loading="lazy" decoding="async" />
-        </figure>
         <p class="fragment fragment--tilt">pool surface</p>
-
-        <figure class="cell cell--c">
-          <img src="pool-images/IMG_4559.jpeg" alt="Edge of the pool" width="1200" height="900" loading="lazy" decoding="async" />
-        </figure>
         <p class="fragment">the edge of the pool</p>
-
-        <figure class="cell cell--d">
-          <img src="pool-images/IMG_4558.jpeg" alt="Stone and water at the pool" width="1200" height="900" loading="lazy" decoding="async" />
-        </figure>
         <p class="fragment fragment--yellow">light in the pool and contrasts with the stone</p>
-
-        <figure class="cell cell--e">
-          <img src="pool-images/image-2.jpg" alt="Around the pool — afternoon" width="1200" height="900" loading="lazy" decoding="async" />
-        </figure>
         <p class="fragment fragment--wide">splashes · sun · music from a site radio</p>
-
-        <figure class="cell cell--f">
-          <img src="pool-images/IMG_4549.jpeg" alt="Pool warming in sun" width="1200" height="900" loading="lazy" decoding="async" />
-        </figure>
         <p class="fragment">energy gathers in the heat round the pool</p>
-
-        <figure class="cell cell--g">
-          <img src="pool-images/IMG_4552.jpeg" alt="Clear water and vegetation at pool edge" width="1200" height="900" loading="lazy" decoding="async" />
-        </figure>
         <p class="fragment fragment--tilt">whirls and eddies collecting vegetation and debris</p>
-
         <p class="fragment fragment--offset">the pool warms in the sun — distant fusion taken in by clear water</p>
-        <figure class="cell cell--h">
-          <img src="pool-images/IMG_4538.jpeg" alt="Submerging in still pool water" width="1200" height="900" loading="lazy" decoding="async" />
-        </figure>
-
-        <figure class="cell cell--i">
-          <img src="pool-images/IMG_4578.jpeg" alt="Immersion in the pool" width="1200" height="900" loading="lazy" decoding="async" />
-        </figure>
         <p class="fragment">emersion in the pool · submerging in the still water</p>
-
-        <figure class="cell cell--j">
-          <img src="pool-images/IMG_4571.jpeg" alt="Blue hour at the pool" width="1200" height="900" loading="lazy" decoding="async" />
-        </figure>
         <p class="fragment fragment--yellow">night awaits the blue hour</p>
-
-        <figure class="cell cell--k">
-          <img src="pool-images/image-1-1.jpg" alt="Pool at night" width="1200" height="900" loading="lazy" decoding="async" />
-        </figure>
         <p class="fragment">we submerge ourselves in the dark water</p>
-
-        <figure class="cell cell--l">
-          <img src="pool-images/IMG_4579.jpeg" alt="Friends around the pool" width="1200" height="900" loading="lazy" decoding="async" />
-        </figure>
         <p class="fragment fragment--wide">nancy and the pool · the pool and the ball</p>
-
         <p class="fragment fragment--tilt">the light playing in the pool</p>
-        <figure class="cell cell--m">
-          <img src="pool-images/IMG_4589.jpeg" alt="Light on pool water" width="1200" height="900" loading="lazy" decoding="async" />
-        </figure>
-
-        <figure class="cell cell--n">
-          <img src="pool-images/IMG_4600.jpeg" alt="Children playing in the pool" width="1200" height="900" loading="lazy" decoding="async" />
-        </figure>
         <p class="fragment">a slower day — slow flow of conversations and children playing</p>
-
-        <figure class="cell cell--o">
-          <img src="pool-images/IMG_4580.jpeg" alt="Cool at last — pool brings relief" width="1200" height="900" loading="lazy" decoding="async" />
-        </figure>
         <p class="fragment fragment--offset">as the pool brings cool at last</p>
         <p class="fragment fragment--yellow">the pool cover retreating</p>
         <p class="fragment">from the pool the heat subsides · the pool awaits</p>
