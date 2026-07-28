@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Pool at Angouleme</title>
+    <style>
+      :root {
+        --sky: #8ecae6;
+        --wall: #f6d55c;
+        --water: #00a6d6;
+        --deep-water: #0077b6;
+        --accent: #ff6b35;
+        --paper: #fffaf0;
+        --ink: #102a43;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Futura", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+        color: var(--ink);
+        background: linear-gradient(180deg, var(--sky) 0 32%, var(--wall) 32% 62%, var(--water) 62% 100%);
+      }
+
+      .page {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem 2.5rem;
+      }
+
+      .card {
+        background: color-mix(in srgb, var(--paper) 92%, white 8%);
+        border: 5px solid var(--deep-water);
+        box-shadow: 12px 12px 0 color-mix(in srgb, var(--accent) 35%, transparent);
+        padding: 2rem;
+      }
+
+      h1 {
+        margin: 0;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        font-size: clamp(1.6rem, 2.6vw, 2.3rem);
+      }
+
+      .subtitle {
+        margin-top: 0.6rem;
+        font-size: 0.98rem;
+        letter-spacing: 0.08em;
+      }
+
+      .icons {
+        display: flex;
+        gap: 0.75rem;
+        margin: 1.4rem 0 1.8rem;
+      }
+
+      .icons svg {
+        width: 34px;
+        height: 34px;
+      }
+
+      .poem h2 {
+        margin: 1.8rem 0 0.6rem;
+        font-size: 1rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--deep-water);
+      }
+
+      .poem p {
+        margin: 0.5rem 0;
+        line-height: 1.6;
+        font-size: 1.04rem;
+      }
+
+      .spacer {
+        height: 1rem;
+      }
+
+      footer {
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 2px dashed var(--deep-water);
+        font-size: 0.9rem;
+      }
+
+      a {
+        color: var(--deep-water);
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <article class="card">
+        <header>
+          <h1>The Pool at Angouleme</h1>
+          <p class="subtitle">A holiday poem in three parts</p>
+          <div class="icons" aria-hidden="true">
+            <svg viewBox="0 0 48 48" role="img">
+              <circle cx="24" cy="24" r="10" fill="#ff6b35" />
+              <g stroke="#ff6b35" stroke-width="3" stroke-linecap="round">
+                <line x1="24" y1="4" x2="24" y2="12" />
+                <line x1="24" y1="36" x2="24" y2="44" />
+                <line x1="4" y1="24" x2="12" y2="24" />
+                <line x1="36" y1="24" x2="44" y2="24" />
+                <line x1="10" y1="10" x2="15" y2="15" />
+                <line x1="33" y1="33" x2="38" y2="38" />
+                <line x1="10" y1="38" x2="15" y2="33" />
+                <line x1="33" y1="15" x2="38" y2="10" />
+              </g>
+            </svg>
+            <svg viewBox="0 0 64 48" role="img">
+              <path
+                d="M4 30 C 12 20, 20 20, 28 30 C 36 40, 44 40, 52 30 C 56 25, 60 24, 62 26 L 62 40 L 4 40 Z"
+                fill="#00a6d6"
+              />
+              <path
+                d="M8 26 C 16 16, 24 16, 32 26 C 40 36, 48 36, 56 26"
+                fill="none"
+                stroke="#0077b6"
+                stroke-width="3"
+                stroke-linecap="round"
+              />
+            </svg>
+            <svg viewBox="0 0 48 48" role="img">
+              <rect x="6" y="8" width="36" height="32" fill="#f6d55c" stroke="#0077b6" stroke-width="3" />
+              <path d="M14 30 L20 24 L26 28 L34 18" fill="none" stroke="#0077b6" stroke-width="3" />
+            </svg>
+          </div>
+        </header>
+
+        <section class="poem">
+          <h2>Part I</h2>
+          <p>The home stretches in the midday sun</p>
+          <p>Food eaten and rest won</p>
+          <p>The hammock brings peace amidst the sparrows song</p>
+          <p>The home rests in the beating sun</p>
+          <div class="spacer"></div>
+          <p>The walls watch the drying grass</p>
+          <p>Water warms in the glass</p>
+          <p>The Bodies stretched between the days hours that pass</p>
+          <p>As the pool brings cool at last</p>
+
+          <h2>Part II</h2>
+          <p>From the pool the heat subsides</p>
+          <p>The showers come the clouds they cool</p>
+          <p>The pool retreats and sets itself aside</p>
+          <p>And hides to wait once more for sun</p>
+          <p>To come and heat its waters.</p>
+          <div class="spacer"></div>
+          <p>The travellers wait</p>
+          <p>With plates of food they dine</p>
+          <p>And wine they drink</p>
+          <p>From heated vines</p>
+          <p>The rain it falls</p>
+          <p>Across the walls where memories hide</p>
+          <p>The travellers subside in sleep.</p>
+          <div class="spacer"></div>
+          <p>A day breaks</p>
+          <p>They wake to news of building warmth</p>
+          <p>And walk the slopes to city walls</p>
+          <p>Inside of which the travellers eat</p>
+          <p>Amidst the gradual rising heat</p>
+          <p>Their feet descend as sun burns full</p>
+          <p>The pool awaits</p>
+          <p>into its cool they plunge.</p>
+          <div class="spacer"></div>
+          <p>Their skin calmed unharmed they swim</p>
+          <p>Into the place of timeless space</p>
+          <p>Into the place of spaceless time</p>
+          <p>Into its waters calm they drift.</p>
+
+          <h2>Part III</h2>
+          <p>Day ends - darkness descends</p>
+          <p>the blue hour holds - the warmth enfolds.</p>
+          <p>Silhouettes shape - night awakes</p>
+          <p>the blue hour holds - memories unfold.</p>
+        </section>
+
+        <footer>
+          <p>
+            <sup>1</sup> Visual direction inspired by David Hockney&rsquo;s pool painting
+            <em>A Bigger Splash</em> (1967). Reference: Tate,
+            <a href="https://www.tate.org.uk/art/artworks/hockney-a-bigger-splash-t03254">A Bigger Splash</a>.
+            David Hockney (born 9 July 1937; death: living at time of publication).
+          </p>
+        </footer>
+      </article>
+    </main>
+  </body>
+</html>
