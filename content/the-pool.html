@@ -72,6 +72,24 @@
         font-size: 0.9rem;
       }
 
+      .backlink {
+        margin: 0 0 1.25rem;
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .backlink a {
+        color: var(--deep-water);
+        text-decoration: none;
+        text-underline-offset: 0.18em;
+      }
+
+      .backlink a:hover {
+        text-decoration: underline;
+        color: var(--accent);
+      }
+
       a {
         color: var(--deep-water);
       }
@@ -80,6 +98,7 @@
   <body>
     <main class="page">
       <article class="card">
+        <p class="backlink"><a href="../index.html">← Fragments &amp; flow</a></p>
         <header>
           <h1>The Pool at Angoulême</h1>
         </header>
@@ -133,6 +152,9 @@
         </section>
 
         <footer>
+          <p>
+            <a href="../index.html">← Contents</a>
+          </p>
           <p>
             <sup>1</sup> Visual direction inspired by David Hockney&rsquo;s pool painting
             <em>A Bigger Splash</em> (1967). Reference: Tate,
