@@ -6,7 +6,7 @@
   <title>Fragments &amp; Flow — Contents</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;700&family=Staatliches&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Caveat:wght@700&family=Space+Grotesk:wght@400;500;700&family=Staatliches&display=swap" rel="stylesheet" />
   <style>
     :root {
       --red: #d61f1f;
@@ -23,6 +23,9 @@
       --deep-water: #0077b6;
       --accent: #ff6b35;
       --pool-paper: #fffaf0;
+      --board: #1a2420;
+      --chalk-yellow: #f5e6a8;
+      --chalk-pink: #f4a8c8;
       --max: 72rem;
     }
 
@@ -237,6 +240,16 @@
       padding: clamp(1.25rem, 3vw, 2rem);
     }
 
+    .entry--chalk .entry-card {
+      background:
+        radial-gradient(circle at 25% 20%, rgba(255, 255, 255, 0.04), transparent 40%),
+        linear-gradient(165deg, #243028, var(--board));
+      border: 4px solid #3d4a42;
+      box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.35), 8px 8px 0 rgba(0, 0, 0, 0.45);
+      padding: clamp(1.25rem, 3vw, 2rem);
+      color: #e8ebe6;
+    }
+
     .entry-label {
       display: inline-block;
       margin: 0 0 0.65rem;
@@ -252,6 +265,14 @@
 
     .entry--pool .entry-label {
       color: var(--deep-water);
+    }
+
+    .entry--chalk .entry-label {
+      color: var(--chalk-yellow);
+      font-family: "Caveat", cursive;
+      font-size: 1.05rem;
+      letter-spacing: 0.04em;
+      text-transform: none;
     }
 
     .entry-title {
@@ -270,6 +291,16 @@
       text-transform: uppercase;
       letter-spacing: 0.1em;
       font-weight: 700;
+    }
+
+    .entry--chalk .entry-title {
+      font-family: "Caveat", cursive;
+      font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+      font-weight: 700;
+      text-transform: lowercase;
+      letter-spacing: 0.02em;
+      color: var(--chalk-pink);
+      text-shadow: 0 0 10px color-mix(in srgb, var(--chalk-pink) 40%, transparent);
     }
 
     .entry-title a {
@@ -295,7 +326,13 @@
     }
 
     .entry--pool .entry-summary {
-      color: var(--ink);
+      color: #cbd2cc;
+    }
+
+    .entry--chalk .entry-summary {
+      color: #cbd2cc;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 0.98rem;
     }
 
     .entry-link {
@@ -313,6 +350,10 @@
 
     .entry--pool .entry-link a {
       color: var(--deep-water);
+    }
+
+    .entry--chalk .entry-link a {
+      color: var(--chalk-yellow);
     }
 
     .footer {
@@ -431,6 +472,21 @@
           </p>
           <p class="entry-link">
             <a href="content/the-pool.html">Open The Pool →</a>
+          </p>
+        </article>
+      </li>
+
+      <li class="entry entry--chalk">
+        <article class="entry-card">
+          <span class="entry-label">Chalk / blackboard / four lines</span>
+          <h2 class="entry-title">
+            <a href="content/combine.html">Combine</a>
+          </h2>
+          <p class="entry-summary">
+            Four words in a child&rsquo;s hand on a dark board — coloured chalk, uneven lines: shine, combine, line, combine. A fragment lifted from the holiday chalk door, minimal and literal.
+          </p>
+          <p class="entry-link">
+            <a href="content/combine.html">Open Combine →</a>
           </p>
         </article>
       </li>
