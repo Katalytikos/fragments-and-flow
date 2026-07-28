@@ -27,6 +27,10 @@
       min-height: 100dvh;
     }
 
+    .stage.is-full {
+      cursor: default;
+    }
+
     .photo {
       position: absolute;
       inset: 0;
@@ -55,8 +59,9 @@
       will-change: mask-image, -webkit-mask-image;
     }
 
-    .photo.is-active {
-      /* radius driven by --r from script */
+    .photo.is-full {
+      -webkit-mask-image: none;
+      mask-image: none;
     }
 
     .hint {
@@ -75,9 +80,11 @@
       pointer-events: none;
       transition: opacity 0.35s ease;
       z-index: 1;
+      line-height: 1.7;
     }
 
-    .stage.is-revealing .hint {
+    .stage.is-revealing .hint,
+    .stage.is-full .hint {
       opacity: 0;
     }
   </style>
@@ -85,13 +92,15 @@
 <body>
   <div class="stage" id="stage">
     <div class="photo" id="photo" aria-hidden="true"></div>
-    <p class="hint">Move to reveal</p>
+    <p class="hint">Move to reveal<br />Double-click for the whole image</p>
   </div>
   <script>
     (function () {
       var stage = document.getElementById("stage");
       var photo = document.getElementById("photo");
       var active = false;
+      var full = false;
+      var lastTap = 0;
 
       function pointFromEvent(event) {
         if (event.touches && event.touches.length) {
@@ -107,14 +116,15 @@
       }
 
       function circleRadius() {
-        return Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.16);
+        return Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.36);
       }
 
       function reveal(event) {
+        if (full) return;
         var point = pointFromEvent(event);
         photo.style.setProperty("--x", point.x + "px");
         photo.style.setProperty("--y", point.y + "px");
-        photo.style.setProperty("--r", Math.max(88, circleRadius()) + "px");
+        photo.style.setProperty("--r", Math.max(200, circleRadius()) + "px");
         if (!active) {
           active = true;
           photo.classList.add("is-active");
@@ -122,19 +132,54 @@
         }
       }
 
-      function hide() {
+      function hideSpotlight() {
+        if (full) return;
         active = false;
         photo.classList.remove("is-active");
         stage.classList.remove("is-revealing");
         photo.style.setProperty("--r", "0px");
       }
 
+      function setFull(on) {
+        full = on;
+        photo.classList.toggle("is-full", on);
+        stage.classList.toggle("is-full", on);
+        if (on) {
+          stage.classList.add("is-revealing");
+          photo.classList.add("is-active");
+          active = true;
+        } else {
+          photo.style.setProperty("--r", "0px");
+          active = false;
+          photo.classList.remove("is-active");
+          stage.classList.remove("is-revealing");
+        }
+      }
+
+      function toggleFull(event) {
+        if (event) event.preventDefault();
+        setFull(!full);
+      }
+
+      function onPointerUp(event) {
+        if (event.pointerType !== "touch") return;
+        var now = Date.now();
+        if (now - lastTap < 320) {
+          toggleFull();
+          lastTap = 0;
+        } else {
+          lastTap = now;
+        }
+      }
+
       stage.addEventListener("pointermove", reveal, { passive: true });
       stage.addEventListener("pointerdown", reveal, { passive: true });
       stage.addEventListener("touchmove", reveal, { passive: true });
       stage.addEventListener("touchstart", reveal, { passive: true });
-      window.addEventListener("pointerleave", hide);
-      window.addEventListener("blur", hide);
+      stage.addEventListener("dblclick", toggleFull);
+      stage.addEventListener("pointerup", onPointerUp, { passive: true });
+      window.addEventListener("pointerleave", hideSpotlight);
+      window.addEventListener("blur", hideSpotlight);
     })();
   </script>
 </body>
