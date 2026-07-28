@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Chalk — Fragments &amp; Flow</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #050505;
+      touch-action: none;
+      cursor: none;
+    }
+
+    .stage {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      min-height: 100dvh;
+    }
+
+    .photo {
+      position: absolute;
+      inset: 0;
+      background-color: #050505;
+      background-image: url("IMG_4588.jpeg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      --x: 50%;
+      --y: 50%;
+      --r: 0px;
+      -webkit-mask-image: radial-gradient(
+        circle var(--r) at var(--x) var(--y),
+        #000 0%,
+        #000 72%,
+        transparent 100%
+      );
+      mask-image: radial-gradient(
+        circle var(--r) at var(--x) var(--y),
+        #000 0%,
+        #000 72%,
+        transparent 100%
+      );
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      will-change: mask-image, -webkit-mask-image;
+    }
+
+    .photo.is-active {
+      /* radius driven by --r from script */
+    }
+
+    .hint {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      margin: 0;
+      padding: 1.5rem;
+      color: rgba(245, 230, 168, 0.35);
+      font-family: "Futura", "Avenir Next", "Helvetica Neue", sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      text-align: center;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+      z-index: 1;
+    }
+
+    .stage.is-revealing .hint {
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="stage" id="stage">
+    <div class="photo" id="photo" aria-hidden="true"></div>
+    <p class="hint">Move to reveal</p>
+  </div>
+  <script>
+    (function () {
+      var stage = document.getElementById("stage");
+      var photo = document.getElementById("photo");
+      var active = false;
+
+      function pointFromEvent(event) {
+        if (event.touches && event.touches.length) {
+          return { x: event.touches[0].clientX, y: event.touches[0].clientY };
+        }
+        if (event.changedTouches && event.changedTouches.length) {
+          return {
+            x: event.changedTouches[0].clientX,
+            y: event.changedTouches[0].clientY
+          };
+        }
+        return { x: event.clientX, y: event.clientY };
+      }
+
+      function circleRadius() {
+        return Math.round(Math.min(window.innerWidth, window.innerHeight) * 0.16);
+      }
+
+      function reveal(event) {
+        var point = pointFromEvent(event);
+        photo.style.setProperty("--x", point.x + "px");
+        photo.style.setProperty("--y", point.y + "px");
+        photo.style.setProperty("--r", Math.max(88, circleRadius()) + "px");
+        if (!active) {
+          active = true;
+          photo.classList.add("is-active");
+          stage.classList.add("is-revealing");
+        }
+      }
+
+      function hide() {
+        active = false;
+        photo.classList.remove("is-active");
+        stage.classList.remove("is-revealing");
+        photo.style.setProperty("--r", "0px");
+      }
+
+      stage.addEventListener("pointermove", reveal, { passive: true });
+      stage.addEventListener("pointerdown", reveal, { passive: true });
+      stage.addEventListener("touchmove", reveal, { passive: true });
+      stage.addEventListener("touchstart", reveal, { passive: true });
+      window.addEventListener("pointerleave", hide);
+      window.addEventListener("blur", hide);
+    })();
+  </script>
+</body>
+</html>
