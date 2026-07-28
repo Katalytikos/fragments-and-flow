@@ -6,7 +6,7 @@
   <title>Fragments &amp; Flow — Angoulême 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Caveat:wght@700&family=Space+Grotesk:wght@400;500;700&family=Staatliches&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Caveat:wght@700&family=Kalam:wght@400;700&family=Space+Grotesk:wght@400;500;700&family=Staatliches&display=swap" rel="stylesheet" />
   <style>
     :root {
       --red: #d61f1f;
@@ -384,6 +384,46 @@
       color: var(--blue);
     }
 
+    .entry--final .entry-card {
+      background:
+        linear-gradient(160deg, rgba(247, 243, 234, 0.92), rgba(236, 228, 214, 0.88)),
+        #e8dfd0;
+      border: 3px solid #3d342c;
+      box-shadow: 10px 10px 0 rgba(61, 52, 44, 0.55);
+      padding: clamp(1.25rem, 3vw, 2rem);
+    }
+
+    .entry--final .entry-label {
+      color: #6b5a48;
+      font-family: "Kalam", cursive;
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      text-transform: none;
+    }
+
+    .entry--final .entry-title {
+      font-family: "Kalam", cursive;
+      font-weight: 700;
+      font-size: clamp(1.55rem, 3.2vw, 2rem);
+      text-transform: none;
+      letter-spacing: 0.01em;
+      color: #2a221c;
+    }
+
+    .entry--final .entry-summary {
+      color: #3d342c;
+      border-left: 0.45rem solid #8a735c;
+      padding-left: 0.85rem;
+    }
+
+    .entry--final .entry-link a {
+      color: #5c4a3a;
+      font-family: "Kalam", cursive;
+      letter-spacing: 0.04em;
+      text-transform: none;
+      font-size: 1.05rem;
+    }
+
     .footer {
       margin-top: 2.5rem;
       display: flex;
@@ -528,6 +568,21 @@
           </p>
           <p class="entry-link">
             <a href="content/combine.html">Open Combine →</a>
+          </p>
+        </article>
+      </li>
+
+      <li class="entry entry--final">
+        <article class="entry-card">
+          <span class="entry-label">Closing / stone walls / onwards</span>
+          <h2 class="entry-title">
+            <a href="content/final.html">Final</a>
+          </h2>
+          <p class="entry-summary">
+            A full-bleed photograph of the house with a closing line about laughter, conversation and love among friends — history in stone walls across four centuries, and travel onwards.
+          </p>
+          <p class="entry-link">
+            <a href="content/final.html">Open Final →</a>
           </p>
         </article>
       </li>
